@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: #f0f2f5;
+            min-height: 100vh;
+        }
+
+        .navbar {
+            background: #1a1a2e;
+            color: white;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .navbar h2 {
+            font-size: 1.3rem;
+        }
+
+        .navbar form button {
+            background: #e74c3c;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+
+        .navbar form button:hover {
+            background: #c0392b;
+        }
+
+        .container {
+            max-width: 700px;
+            margin: 3rem auto;
+            padding: 0 1rem;
+        }
+
+        .welcome-card {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            text-align: center;
+        }
+
+        .welcome-card h1 {
+            color: #1a1a2e;
+            margin-bottom: 0.5rem;
+        }
+
+        .welcome-card p {
+            color: #666;
+            margin-bottom: 1.5rem;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 0.4rem 1rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: bold;
+            margin-bottom: 1.5rem;
+        }
+
+        .badge-admin {
+            background: #ffeaa7;
+            color: #d35400;
+        }
+
+        .badge-user {
+            background: #dfe6e9;
+            color: #2d3436;
+        }
+
+        .btn-admin {
+            display: inline-block;
+            padding: 0.75rem 1.5rem;
+            background: #4361ee;
+            color: white;
+            border-radius: 8px;
+            text-decoration: none;
+            font-size: 1rem;
+            transition: background 0.2s;
+        }
+
+        .btn-admin:hover {
+            background: #3a56d4;
+        }
+    </style>
+</head>
+<body>
+<div class="navbar">
+    <h2>Mi Aplicación</h2>
+    <form method="post" th:action="@{/logout}">
+        <button type="submit">Cerrar Sesión</button>
+    </form>
+</div>
+
+<div class="container">
+    <div class="welcome-card">
+        <h1>¡Bienvenido!</h1>
+        <p>Has iniciado sesión como <strong sec:authentication="name"></strong></p>
+
+        <span class="badge badge-admin" sec:authorize="hasRole('ADMIN')">
+                Administrador
+            </span>
+        <span class="badge badge-user" sec:authorize="hasRole('USER')">
+                Usuario Estándar
+            </span>
+
+        <br/>
+
+        <a class="btn-admin"
+           sec:authorize="hasRole('ADMIN')" th:href="@{/admin}">
+            Panel de Administración
+        </a>
+
+        <p sec:authorize="hasRole('USER')" style="color:#666; margin-top:1rem;">
+            Acceso de usuario estándar. Contacta al administrador para más permisos.
+        </p>
+    </div>
+</div>
+</body>
+</html>

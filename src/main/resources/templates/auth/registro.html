@@ -3,30 +3,133 @@
 <head>
     <meta charset="UTF-8">
     <title>Registro</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: #f0f2f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .card {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #1a1a2e;
+            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.3rem;
+            color: #333;
+            font-size: 0.95rem;
+        }
+
+        .field {
+            margin-bottom: 1rem;
+        }
+
+        input {
+            width: 100%;
+            padding: 0.65rem 0.9rem;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border 0.2s;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #4361ee;
+        }
+
+        .error {
+            color: #c0392b;
+            font-size: 0.82rem;
+            margin-top: 0.3rem;
+            display: block;
+        }
+
+        button {
+            width: 100%;
+            padding: 0.75rem;
+            background: #4361ee;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            cursor: pointer;
+            margin-top: 0.5rem;
+            transition: background 0.2s;
+        }
+
+        button:hover {
+            background: #3a56d4;
+        }
+
+        .link {
+            text-align: center;
+            margin-top: 1rem;
+            font-size: 0.9rem;
+        }
+
+        .link a {
+            color: #4361ee;
+            text-decoration: none;
+        }
+
+        .link a:hover {
+            text-decoration: underline;
+        }
+    </style>
 </head>
 <body>
-<h1>Registro de Usuario</h1>
+<div class="card">
+    <h1>Registro</h1>
 
-<form th:action="@{/registro}" th:object="${usuario}" method="post">
-    <label>Nombre:
-        <input type="text" th:field="*{nombre}" />
-    </label>
-    <span th:if="${#fields.hasErrors('nombre')}"
-          th:errors="*{nombre}" style="color:red"></span><br/>
+    <form method="post" th:action="@{/registro}" th:object="${usuario}">
+        <div class="field">
+            <label>Nombre</label>
+            <input placeholder="Tu nombre completo" th:field="*{nombre}" type="text"/>
+            <span class="error"
+                  th:errors="*{nombre}" th:if="${#fields.hasErrors('nombre')}"></span>
+        </div>
 
-    <label>Correo:
-        <input type="email" th:field="*{email}" />
-    </label>
-    <span th:if="${#fields.hasErrors('email')}"
-          th:errors="*{email}" style="color:red"></span><br/>
+        <div class="field">
+            <label>Correo</label>
+            <input placeholder="correo@ejemplo.com" th:field="*{email}" type="email"/>
+            <span class="error"
+                  th:errors="*{email}" th:if="${#fields.hasErrors('email')}"></span>
+        </div>
 
-    <label>Contraseña:
-        <input type="password" th:field="*{contrasenia}" />
-    </label><br/>
+        <div class="field">
+            <label>Contraseña</label>
+            <input placeholder="••••••••" th:field="*{contrasenia}" type="password"/>
+        </div>
 
-    <button type="submit">Registrarse</button>
-</form>
+        <button type="submit">Registrarse</button>
+    </form>
 
-<a th:href="@{/login}">¿Ya tiene cuenta? Iniciar sesión</a>
+    <div class="link">
+        <a th:href="@{/login}">¿Ya tiene cuenta? Iniciar sesión</a>
+    </div>
+</div>
 </body>
 </html>

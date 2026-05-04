@@ -1,29 +1,140 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+>
 <head>
     <meta charset="UTF-8">
     <title>Iniciar Sesión</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: #f0f2f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .card {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #1a1a2e;
+            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+        }
+
+        .alert {
+            padding: 0.75rem 1rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+        }
+
+        .alert-error {
+            background: #ffe0e0;
+            color: #c0392b;
+        }
+
+        .alert-success {
+            background: #e0f7e9;
+            color: #27ae60;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 1rem;
+            color: #333;
+            font-size: 0.95rem;
+        }
+
+        input {
+            width: 100%;
+            padding: 0.65rem 0.9rem;
+            margin-top: 0.3rem;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border 0.2s;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #4361ee;
+        }
+
+        button {
+            width: 100%;
+            padding: 0.75rem;
+            background: #4361ee;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            cursor: pointer;
+            margin-top: 0.5rem;
+            transition: background 0.2s;
+        }
+
+        button:hover {
+            background: #3a56d4;
+        }
+
+        .link {
+            text-align: center;
+            margin-top: 1rem;
+            font-size: 0.9rem;
+        }
+
+        .link a {
+            color: #4361ee;
+            text-decoration: none;
+        }
+
+        .link a:hover {
+            text-decoration: underline;
+        }
+    </style>
 </head>
 <body>
-<h1>Iniciar Sesión</h1>
+<div class="card">
+    <h1>Iniciar Sesión</h1>
 
-<div th:if="${param.error}" style="color:red">
-    Correo o contraseña incorrectos.
-</div>
-<div th:if="${param.logout}" style="color:green">
-    Sesión cerrada correctamente.
-</div>
-<div th:if="${param.registrado}" style="color:green">
-    Registro exitoso. Inicie sesión.
-</div>
+    <div class="alert alert-error" th:if="${param.error}">
+        Correo o contraseña incorrectos.
+    </div>
+    <div class="alert alert-success" th:if="${param.logout}">
+        Sesión cerrada correctamente.
+    </div>
+    <div class="alert alert-success" th:if="${param.registrado}">
+        Registro exitoso. Inicie sesión.
+    </div>
 
-<form th:action="@{/login}" method="post">
-    <label>Correo: <input type="email" name="username" required /></label><br/>
-    <label>Contraseña: <input type="password" name="password" required /></label><br/>
-    <button type="submit">Ingresar</button>
-</form>
+    <form method="post" th:action="@{/login}">
+        <label>Correo:
+            <input name="username" placeholder="correo@ejemplo.com" required type="email"/>
+        </label>
+        <label>Contraseña:
+            <input name="password" placeholder="••••••••" required type="password"/>
+        </label>
+        <button type="submit">Ingresar</button>
+    </form>
 
-<a th:href="@{/registro}">¿No tiene cuenta? Registrarse</a>
+    <div class="link">
+        <a th:href="@{/registro}">¿No tiene cuenta? Registrarse</a>
+    </div>
+</div>
 </body>
 </html>
